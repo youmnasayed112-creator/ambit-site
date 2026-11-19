@@ -1,0 +1,517 @@
+<title>Ambit ERP</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: a light "operating-system" marketing page — sticky rail nav, a dark console hero,
+   then four product pillars shown as real mini-UI, the module grid, controls, and a demo CTA. */
+:root{
+  --bg:#FBFAF7; --surface:#FFFFFF; --raise:#F4F2EC; --panel:#14110D; --panel-2:#1E1A14;
+  --ink:#1A1714; --soft:#6E685E; --faint:#9A948A; --line:#EAE6DE;
+  --accent:#C74634; --accent-d:#A83B2B; --on-accent:#FFFFFF;
+  --good:#2F7A47; --warn:#9A6B12; --info:#2E6B8A;
+  --shadow:0 1px 0 rgba(26,23,20,.03),0 24px 50px -28px rgba(26,23,20,.28);
+  --disp:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F0C09; --surface:#171310; --raise:#201A15; --panel:#080605; --panel-2:#17120D;
+  --ink:#F3EFE8; --soft:#B2ABA0; --faint:#847D72; --line:#2C251E;
+  --accent:#E2604D; --accent-d:#EE7A68; --on-accent:#140F0B;
+  --good:#5CB67B; --warn:#D9A648; --info:#6FB6D6;
+  --shadow:0 1px 0 rgba(0,0,0,.4),0 24px 50px -28px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0F0C09; --surface:#171310; --raise:#201A15; --panel:#080605; --panel-2:#17120D;
+  --ink:#F3EFE8; --soft:#B2ABA0; --faint:#847D72; --line:#2C251E;
+  --accent:#E2604D; --accent-d:#EE7A68; --on-accent:#140F0B;
+  --good:#5CB67B; --warn:#D9A648; --info:#6FB6D6;
+  --shadow:0 1px 0 rgba(0,0,0,.4),0 24px 50px -28px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+h1,h2,h3,h4{margin:0;font-family:var(--disp);font-weight:700;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(2.6rem,6.4vw,4.9rem)}
+h2{font-size:clamp(2rem,4.4vw,3.1rem)}
+h3{font-size:1.28rem;letter-spacing:-.01em}
+p{margin:0}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(60px,9vw,116px)}
+.eyebrow{font:600 .74rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--soft);font-size:1.16rem;max-width:58ch}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:9px;font:600 .98rem var(--body);padding:14px 24px;border-radius:9px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);cursor:pointer;transition:transform .12s ease,background .12s ease}
+.btn:hover{background:var(--accent-d);border-color:var(--accent-d);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--raise);border-color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;height:68px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:700;font-size:1.34rem;letter-spacing:-.03em}
+.brand svg{width:34px;height:34px;flex:none}
+.nav nav{display:flex;gap:26px;font-size:.95rem;font-weight:500;color:var(--soft)}
+.nav nav a:hover{color:var(--ink)}
+.nav .act{display:flex;align-items:center;gap:12px}
+.tbtn{width:38px;height:38px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.tbtn:hover{background:var(--raise)}
+@media(max-width:860px){.nav nav{display:none}.nav .act .btn{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(44px,7vw,84px) clamp(50px,7vw,96px)}
+.hero .grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,4vw,64px);align-items:center}
+.tag{display:inline-flex;align-items:center;gap:8px;font:600 .76rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:99px;padding:7px 14px}
+.hero h1{margin:22px 0 0}
+.hero h1 .u{color:var(--accent)}
+.hero .lead{margin-top:22px}
+.hcta{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.pill-min{font:500 .82rem var(--body);color:var(--soft);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px}
+.pill-min b{color:var(--ink);font-weight:600}
+@media(max-width:900px){.hero .grid{grid-template-columns:1fr;gap:40px}}
+
+/* console mock */
+.console{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;box-shadow:var(--shadow);color:#EDE9E1;font-family:var(--mono)}
+.con-top{display:flex;align-items:center;gap:8px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.dot{width:11px;height:11px;border-radius:50%}
+.con-top b{margin-left:8px;font:600 .82rem var(--body);letter-spacing:.02em;color:#CFC9BF}
+.con-top .st{margin-left:auto;font:600 .68rem var(--mono);letter-spacing:.1em;color:#8FCFAE;text-transform:uppercase}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 14px}
+.kpi .l{font:600 .6rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8E877C}
+.kpi .v{font-family:var(--disp);font-weight:700;font-size:1.5rem;margin-top:5px;letter-spacing:-.02em;color:#fff}
+.kpi .v.red{color:#E2604D}.kpi .v.grn{color:#8FCFAE}
+.led{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden}
+.led .hd{display:flex;justify-content:space-between;padding:11px 15px;font:600 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8E877C;border-bottom:1px solid rgba(255,255,255,.07)}
+.led .hd .bal{color:#8FCFAE}
+.led .ln{display:flex;justify-content:space-between;padding:9px 15px;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.led .ln:last-child{border-bottom:none}
+.led .dr{color:#E2604D}.led .cr{color:#8FCFAE}.led .am{color:#D7D1C7}
+
+/* band */
+.band{background:var(--panel);color:#EFEBE3}
+.band .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:26px;align-items:center}
+.band .k{font-family:var(--disp);font-weight:700;font-size:2rem;color:#fff;letter-spacing:-.02em}
+.band p{color:#B7B0A4;font-size:.95rem;margin-top:4px}
+.band .intro{font-family:var(--disp);font-weight:600;font-size:1.15rem;color:#fff;line-height:1.3}
+@media(max-width:820px){.band .wrap{grid-template-columns:1fr 1fr;gap:22px}}
+
+/* pillars */
+.sec-head{max-width:70ch}
+.sec-head h2{margin:12px 0 0}
+.sec-head p{margin-top:16px}
+.pillars{display:flex;flex-direction:column;gap:clamp(28px,5vw,64px);margin-top:56px}
+.pillar{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(26px,4vw,58px);align-items:center}
+.pillar.flip .p-copy{order:2}
+.p-no{font:600 .76rem var(--mono);letter-spacing:.18em;color:var(--accent)}
+.p-copy h3{font-size:clamp(1.6rem,2.6vw,2.1rem);margin:14px 0 0}
+.p-copy p{color:var(--soft);margin-top:14px;max-width:46ch}
+.p-list{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:11px}
+.p-list li{display:flex;gap:11px;align-items:flex-start;font-size:.98rem}
+.p-list svg{width:20px;height:20px;color:var(--accent);flex:none;margin-top:2px}
+.viz{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);min-width:0}
+.viz-l{font:600 .64rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.node{flex:1;min-width:96px;background:var(--raise);border:1px solid var(--line);border-radius:10px;padding:13px 12px;text-align:center}
+.node .d{font:600 .58rem var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+.node .t{font-weight:600;font-size:.92rem;margin-top:5px}
+.ar{align-self:center;color:var(--accent);font-weight:700}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.tile{background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:16px}
+.tile .l{font:600 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tile .v{font-family:var(--disp);font-weight:700;font-size:1.7rem;margin-top:6px;letter-spacing:-.02em}
+.tile .v.red{color:var(--accent)}
+.lots{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.lot{display:flex;align-items:center;justify-content:space-between;background:var(--raise);border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:.92rem}
+.chip{font:600 .72rem var(--body);padding:4px 11px;border-radius:99px}
+.c-bad{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent-d)}
+.c-warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.c-good{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+/* everyday viz */
+.say{display:flex;align-items:center;gap:14px;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.say .ic{font-size:26px;line-height:1}
+.say .k{display:block;font:600 .6rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.say b{font-size:1.05rem}
+.down{text-align:center;color:var(--accent);font-size:22px;font-weight:700;line-height:1;margin:8px 0}
+.ev-led{background:var(--panel);border-radius:12px;padding:16px 18px;font-family:var(--mono);color:#EDE9E1}
+.ev-led .ln{display:flex;justify-content:space-between;padding:4px 0;font-size:.92rem}
+.ev-led .dr{color:#E2604D}.ev-led .cr{color:#8FCFAE}
+.ev-led .cap{margin-top:10px;font-family:var(--body);font-size:.78rem;color:#9A948A;text-align:center}
+.review{display:flex;align-items:center;justify-content:space-between;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-weight:600;margin-top:12px}
+/* ccc viz */
+.ccc-row{display:flex;align-items:stretch;gap:10px}
+.ccc-t{flex:1;text-align:center;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:16px 8px}
+.ccc-t .l{font:600 .6rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.ccc-t .v{font-family:var(--disp);font-weight:700;font-size:1.9rem;margin-top:4px}
+.ccc-op{align-self:center;font-family:var(--disp);font-weight:700;font-size:1.5rem;color:var(--accent)}
+.ccc-eq{margin-top:16px;background:var(--panel);border-radius:12px;padding:18px;display:flex;align-items:center;justify-content:space-between;color:#EDE9E1}
+.ccc-eq .l{font:600 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#9A948A}
+.ccc-eq .v{font-family:var(--disp);font-weight:700;font-size:2.2rem;color:#fff}
+.ccc-eq .v b{color:#E2604D}
+.track{height:12px;border-radius:7px;margin-top:16px;background:linear-gradient(90deg,var(--info) 0 42%,var(--warn) 42% 80%,var(--accent) 80% 100%)}
+.track-k{display:flex;justify-content:space-between;font:500 .72rem var(--mono);color:var(--faint);margin-top:7px}
+/* reporting viz */
+.rtabs{display:flex;gap:6px;margin-bottom:14px}
+.rtab{font:600 .78rem var(--body);padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--soft);cursor:pointer}
+.rtab[aria-selected="true"]{background:var(--panel);color:#fff;border-color:var(--panel)}
+.stmt{font-family:var(--mono);font-size:.9rem}
+.stmt .r{display:flex;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--line)}
+.stmt .r.sub{color:var(--soft)}
+.stmt .r.tot{font-weight:600;border-bottom:none;border-top:2px solid var(--ink);margin-top:4px;padding-top:11px}
+.stmt .r .amt{font-variant-numeric:tabular-nums}
+.stmt .r .amt.pos{color:var(--good)}
+.rpanel{display:none}.rpanel.on{display:block}
+
+/* modules */
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px}
+.mod .mi{width:42px;height:42px;border-radius:10px;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);display:grid;place-items:center;margin-bottom:14px}
+.mod h4{font-family:var(--disp);font-size:1.02rem;font-weight:600}
+.mod p{color:var(--soft);font-size:.88rem;margin-top:6px}
+.mod.key{background:var(--panel);border-color:var(--panel)}
+.mod.key h4{color:#fff}.mod.key p{color:#B7B0A4}
+.mod.key .mi{background:rgba(226,96,77,.18);color:#E2604D}
+.mod.key .kt{display:inline-block;font:600 .58rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#E2604D;margin-top:10px}
+@media(max-width:900px){.mods{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.mods{grid-template-columns:1fr}}
+
+/* controls */
+.controls{background:var(--raise)}
+.ctl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.ctl{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px;display:flex;gap:14px}
+.ctl svg{width:24px;height:24px;color:var(--accent);flex:none}
+.ctl h4{font-family:var(--disp);font-size:1rem;font-weight:600}
+.ctl p{color:var(--soft);font-size:.9rem;margin-top:5px}
+@media(max-width:820px){.ctl-grid{grid-template-columns:1fr}}
+
+/* cta */
+.cta{background:var(--panel);color:#F2EEE6}
+.cta .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.cta h2{color:#fff}
+.cta p{color:#B7B0A4;margin-top:16px;max-width:42ch}
+.cta .reasons{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:10px}
+.cta .reasons li{display:flex;gap:11px;align-items:center;color:#E7E2DA;font-size:.98rem}
+.cta .reasons svg{width:20px;height:20px;color:#E2604D;flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+.card h3{font-size:1.25rem}
+.card p{color:var(--soft);font-size:.94rem;margin-top:8px}
+.field{display:grid;gap:6px;margin-top:16px;font:600 .8rem var(--body)}
+.field input{font:400 1rem var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px 13px}
+.field input:focus{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.card .btn{width:100%;justify-content:center;margin-top:18px}
+.cmsg{font-size:.9rem;margin-top:12px;min-height:1.1em;color:var(--good);font-weight:600}
+.fine{font-size:.78rem;color:var(--faint);margin-top:10px}
+@media(max-width:820px){.cta .wrap{grid-template-columns:1fr;gap:34px}}
+
+footer{border-top:1px solid var(--line);padding-block:34px;color:var(--soft);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:760px){.pillar,.pillar.flip .p-copy{grid-template-columns:1fr;order:0}.pillar{grid-template-columns:1fr}.band .k{font-size:1.7rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="Ambit home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#C74634"/><path d="M16 49 32 14l16 35" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24.5 35h15M22 43h20" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+    Ambit
+  </a>
+  <nav><a href="#why">Why Ambit</a><a href="#supply">Supply chain</a><a href="#everyday">Everyday</a><a href="#cash">Cash cycle</a><a href="#reporting">Reporting</a><a href="#platform">Platform</a></nav>
+  <div class="act">
+    <button class="tbtn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <a class="btn" href="#demo">Request a demo</a>
+  </div>
+</div></header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero"><div class="wrap grid">
+  <div>
+    <span class="tag">AI-native accounting &amp; operations</span>
+    <h1>One platform for the numbers that <span class="u">run your business.</span></h1>
+    <p class="lead">Ambit joins your supply chain, your day-to-day transactions, your working-capital metrics and your financial statements on a single ledger — so every action books itself and every report is always current. Made for startups &amp; growing businesses.</p>
+    <div class="hcta">
+      <a class="btn" href="#demo">Request a demo</a>
+      <a class="btn ghost" href="#why">See how it works</a>
+    </div>
+    <div class="pills">
+      <span class="pill-min"><b>Supply chain</b> to ledger</span>
+      <span class="pill-min"><b>Everyday</b> for non-accountants</span>
+      <span class="pill-min"><b>Cash conversion cycle</b>, live</span>
+      <span class="pill-min"><b>Financial statements</b> on demand</span>
+    </div>
+  </div>
+  <div class="console" aria-label="Ambit live console preview">
+    <div class="con-top"><span class="dot" style="background:#E2604D"></span><span class="dot" style="background:#D9A648"></span><span class="dot" style="background:#8FCFAE"></span><b>Ambit — Group console</b><span class="st">● Live</span></div>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Cash on hand</div><div class="v">£524k</div></div>
+      <div class="kpi"><div class="l">Cash cycle</div><div class="v red">50d</div></div>
+      <div class="kpi"><div class="l">Gross margin</div><div class="v grn">38%</div></div>
+    </div>
+    <div class="led">
+      <div class="hd"><span>Auto-posted · Goods receipt GRN-0042</span><span class="bal">Balanced</span></div>
+      <div class="ln"><span class="dr">Dr 1300 Inventory</span><span class="am">7,625.00</span></div>
+      <div class="ln"><span class="cr">Cr 2050 GRNI</span><span class="am">7,625.00</span></div>
+      <div class="ln"><span class="dr">Dr 1100 Receivable</span><span class="am">9,180.00</span></div>
+      <div class="ln"><span class="cr">Cr 4000 Revenue</span><span class="am">9,180.00</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BAND -->
+<div class="band"><div class="wrap">
+  <div class="intro">Nine modules, one ledger. Post once, and it shows up everywhere.</div>
+  <div><div class="k">1 ledger</div><p>Every module writes to the same double-entry books.</p></div>
+  <div><div class="k">Multi-region</div><p>Entities and currencies, consolidated to a group view.</p></div>
+  <div><div class="k">Day one</div><p>Approvals, audit trail and period locks built in.</p></div>
+</div></div>
+
+<!-- WHY / PILLARS -->
+<section id="why"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">Why teams choose Ambit</span>
+    <h2>Four things most accounting tools make hard. Ambit makes them automatic.</h2>
+    <p class="lead">The rest is a full finance suite. These four are why finance leads switch.</p>
+  </div>
+
+  <div class="pillars">
+
+    <!-- 1 Supply chain -->
+    <article class="pillar" id="supply">
+      <div class="p-copy">
+        <div class="p-no">01 — SUPPLY CHAIN</div>
+        <h3>Stock that ties to your books.</h3>
+        <p>Raise a purchase order, receive the goods, ship to the customer. Ambit values inventory at weighted-average cost and posts the inventory, COGS and VAT entries for you — no re-keying between your warehouse and your ledger.</p>
+        <ul class="p-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Procure-to-pay and order-to-cash on one timeline</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Batch &amp; expiry tracking with first-in-first-out picking</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Live inventory valuation, reorder alerts, multi-warehouse</li>
+        </ul>
+      </div>
+      <div class="viz">
+        <div class="viz-l"><span>Procure → receive → ship</span><span class="chip c-good">Auto-posted</span></div>
+        <div class="flow">
+          <div class="node"><div class="d">PO</div><div class="t">Order</div></div><div class="ar">→</div>
+          <div class="node"><div class="d">GRN</div><div class="t">Receive</div></div><div class="ar">→</div>
+          <div class="node"><div class="d">Stock</div><div class="t">Value</div></div><div class="ar">→</div>
+          <div class="node"><div class="d">Ship</div><div class="t">COGS</div></div>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="l">Inventory value</div><div class="v">£27,433</div></div>
+          <div class="tile"><div class="l">Near expiry ≤90d</div><div class="v red">£7,294</div></div>
+        </div>
+        <div class="lots">
+          <div class="lot"><span>Lot AMX-2405 · Amoxicillin</span><span class="chip c-bad">Expired</span></div>
+          <div class="lot"><span>Lot INS-2406 · Insulin</span><span class="chip c-warn">≤30 days</span></div>
+          <div class="lot"><span>Lot VTD-2410 · Vitamin D3</span><span class="chip c-good">OK</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 Everyday -->
+    <article class="pillar flip" id="everyday">
+      <div class="p-copy">
+        <div class="p-no">02 — EVERYDAY</div>
+        <h3>Accounting for people who don’t do accounting.</h3>
+        <p>Not everyone on your team speaks debits and credits. The Everyday tab lets anyone record what happened in plain language — Ambit writes the correct double-entry behind the scenes and routes it to your accountant to approve.</p>
+        <ul class="p-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>“I paid for something”, “I made a sale”, “I paid in advance”</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Even prepaids and accruals are booked in the right month</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nothing posts until an accountant reviews and approves it</li>
+        </ul>
+      </div>
+      <div class="viz">
+        <div class="viz-l"><span>From plain language to a reviewed entry</span></div>
+        <div class="say"><span class="ic">💰</span><div><span class="k">They record</span><b>I made a sale — £9,180</b></div></div>
+        <div class="down">↓</div>
+        <div class="ev-led">
+          <div class="ln"><span class="dr">Dr 1100 Accounts Receivable</span><span>9,180.00</span></div>
+          <div class="ln"><span class="cr">Cr 4000 Revenue</span><span>7,650.00</span></div>
+          <div class="ln"><span class="cr">Cr 2100 VAT Payable</span><span>1,530.00</span></div>
+          <div class="cap">Ambit writes the entry</div>
+        </div>
+        <div class="review"><span>Sale — Globex Ltd</span><span class="chip c-warn">In review</span></div>
+      </div>
+    </article>
+
+    <!-- 3 Cash conversion cycle -->
+    <article class="pillar" id="cash">
+      <div class="p-copy">
+        <div class="p-no">03 — CASH CONVERSION CYCLE</div>
+        <h3>See the cash tied up in your business.</h3>
+        <p>Ambit computes your cash conversion cycle straight from the ledger — how long cash is locked in inventory and receivables, less what you owe suppliers. Watch it move as you collect faster, hold less stock or renegotiate terms.</p>
+        <ul class="p-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>DIO + DSO − DPO, recalculated on every posting</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Pairs with cash runway, burn and a 13-week forecast</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The working-capital number investors ask for, always ready</li>
+        </ul>
+      </div>
+      <div class="viz">
+        <div class="viz-l"><span>Working capital, in days</span></div>
+        <div class="ccc-row">
+          <div class="ccc-t"><div class="l">DIO</div><div class="v">42</div></div>
+          <div class="ccc-op">+</div>
+          <div class="ccc-t"><div class="l">DSO</div><div class="v">38</div></div>
+          <div class="ccc-op">−</div>
+          <div class="ccc-t"><div class="l">DPO</div><div class="v">30</div></div>
+        </div>
+        <div class="ccc-eq"><span class="l">Cash conversion cycle</span><span class="v"><b>50</b> days</span></div>
+        <div class="track"></div>
+        <div class="track-k"><span>Inventory 42d</span><span>Receivables +38d</span><span>Payables −30d</span></div>
+      </div>
+    </article>
+
+    <!-- 4 Financial reporting -->
+    <article class="pillar flip" id="reporting">
+      <div class="p-copy">
+        <div class="p-no">04 — FINANCIAL REPORTING</div>
+        <h3>Statements that are ready before you ask.</h3>
+        <p>Because every module posts to the same ledger, your trial balance, profit &amp; loss, classified balance sheet and cash flow are always current. Drill from a statement line to the journal entry and the source document behind it.</p>
+        <ul class="p-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Trial balance, P&amp;L, balance sheet and cash flow</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Multi-currency, consolidated to a group view</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Every figure drills to its entry and its document</li>
+        </ul>
+      </div>
+      <div class="viz">
+        <div class="rtabs" role="tablist" aria-label="Statements">
+          <button class="rtab" role="tab" aria-selected="true" data-r="pnl">P&amp;L</button>
+          <button class="rtab" role="tab" aria-selected="false" data-r="bs">Balance sheet</button>
+          <button class="rtab" role="tab" aria-selected="false" data-r="tb">Trial balance</button>
+        </div>
+        <div class="rpanel on" data-rp="pnl"><div class="stmt">
+          <div class="r"><span>Revenue</span><span class="amt">612,400</span></div>
+          <div class="r sub"><span>Cost of sales</span><span class="amt">(379,688)</span></div>
+          <div class="r"><span>Gross profit</span><span class="amt pos">232,712</span></div>
+          <div class="r sub"><span>Operating expenses</span><span class="amt">(146,900)</span></div>
+          <div class="r tot"><span>Operating profit</span><span class="amt">85,812</span></div>
+        </div></div>
+        <div class="rpanel" data-rp="bs"><div class="stmt">
+          <div class="r"><span>Current assets</span><span class="amt">418,900</span></div>
+          <div class="r sub"><span>Inventory</span><span class="amt">27,433</span></div>
+          <div class="r"><span>Non-current assets</span><span class="amt">203,000</span></div>
+          <div class="r sub"><span>Current liabilities</span><span class="amt">(164,595)</span></div>
+          <div class="r tot"><span>Net assets</span><span class="amt">457,305</span></div>
+        </div></div>
+        <div class="rpanel" data-rp="tb"><div class="stmt">
+          <div class="r"><span>1100 Receivables</span><span class="amt">92,180</span></div>
+          <div class="r"><span>1300 Inventory</span><span class="amt">27,433</span></div>
+          <div class="r"><span>2000 Payables</span><span class="amt">(61,240)</span></div>
+          <div class="r"><span>4000 Revenue</span><span class="amt">(612,400)</span></div>
+          <div class="r tot"><span>Dr = Cr</span><span class="amt">0.00</span></div>
+        </div></div>
+      </div>
+    </article>
+
+  </div>
+</div></section>
+
+<!-- PLATFORM / modules -->
+<section id="platform" class="controls" style="background:var(--bg)"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">The whole platform</span>
+    <h2>Everything finance, in one place.</h2>
+    <p class="lead">The four pillars above sit inside a complete accounting suite. Post a bill in one module and it flows to the next without re-keying.</p>
+  </div>
+  <div class="mods">
+    <div class="mod key"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z M3 7v10l9 4 9-4V7 M12 11v10"/></svg></div><h4>Supply Chain</h4><p>PO, goods receipt, inventory, batch &amp; expiry, shipments.</p><span class="kt">Highlight</span></div>
+    <div class="mod key"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></div><h4>Everyday</h4><p>Plain-language entry for non-accountants, sent for review.</p><span class="kt">Highlight</span></div>
+    <div class="mod key"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18 M7 14l4-4 3 3 5-6"/></svg></div><h4>Planning &amp; Analysis</h4><p>Cash conversion cycle, runway, 13-week forecast, margins.</p><span class="kt">Highlight</span></div>
+    <div class="mod key"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4 M4 20h16 M8 16v-5 M12 16V8 M16 16v-8"/></svg></div><h4>Financial Reporting</h4><p>Trial balance, P&amp;L, balance sheet and cash flow.</p><span class="kt">Highlight</span></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z M14 3v5h5 M10 13h6 M10 17h6"/></svg></div><h4>Accounts Payable</h4><p>Bills, vendor statements and AI capture from PDFs and scans.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z M9 8h6 M9 12h6"/></svg></div><h4>Accounts Receivable</h4><p>Invoices, credit notes, customer statements and aging.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 7v10 M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></svg></div><h4>Treasury</h4><p>Cash and bank, bank import, scheduled payments.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h9v17 M14 9h5v12 M8 8h3 M8 12h3 M3 21h18"/></svg></div><h4>Fixed Assets</h4><p>Asset register, depreciation runs and disposals.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6 M16 5a3 3 0 0 1 0 6 M18 14c2 .8 3.5 3 3.5 6"/></svg></div><h4>Employee Costs</h4><p>Payroll runs, tax remittance and reimbursements.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4"/></svg></div><h4>Audit &amp; Tax</h4><p>Entry approvals, audit trail, VAT summary and claims.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div><h4>Configuration</h4><p>Regions, chart of accounts, currencies and period locks.</p></div>
+    <div class="mod"><div class="mi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M3 12h18 M12 3c2.5 2.5 2.5 15.5 0 18 M12 3c-2.5 2.5-2.5 15.5 0 18"/></svg></div><h4>Multi-region</h4><p>Entities, currencies, intercompany and consolidation.</p></div>
+  </div>
+</div></section>
+
+<!-- CONTROLS -->
+<section class="controls"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">Built-in controls</span>
+    <h2>So your auditor can follow every number.</h2>
+    <p class="lead">Good controls are easier to switch on from day one than to retrofit in year three.</p>
+  </div>
+  <div class="ctl-grid">
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg><div><h4>Maker &amp; checker</h4><p>No entry posts until a second person approves it.</p></div></div>
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5z M3 13l9 5 9-5"/></svg><div><h4>Tamper-evident ledger</h4><p>Each entry is hash-chained to the one before it.</p></div></div>
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6 M16 5a3 3 0 0 1 0 6 M18 14c2 .8 3.5 3 3.5 6"/></svg><div><h4>Role-based access</h4><p>Admin, Maker, Checker and Viewer, enforced server-side.</p></div></div>
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4"/></svg><div><h4>Period locks</h4><p>Close a month and nothing posts back into it.</p></div></div>
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg><div><h4>Two-factor sign-in</h4><p>Authenticator-app codes protect every account.</p></div></div>
+    <div class="ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z M14 3v5h5 M10 13h6 M10 17h6"/></svg><div><h4>Documents attached</h4><p>Every entry can carry the invoice or statement behind it.</p></div></div>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section class="cta" id="demo"><div class="wrap">
+  <div>
+    <span class="eyebrow">Request a demo</span>
+    <h2>See your own numbers run themselves.</h2>
+    <p>Tell us a little about your team and we’ll set up a live walkthrough with your documents — from a supply-chain receipt to a finished set of statements.</p>
+    <ul class="reasons">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Watch a document become a journal entry</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Follow your cash conversion cycle live</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plan your first entity and chart of accounts</li>
+    </ul>
+  </div>
+  <form class="card" id="demoForm" novalidate>
+    <h3>Book a walkthrough</h3>
+    <p>We reply by email to arrange a time.</p>
+    <label class="field">Full name<input id="dName" name="name" autocomplete="name" placeholder="Your name"></label>
+    <label class="field">Work email<input id="dEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com"></label>
+    <label class="field">Company<input id="dCompany" name="company" autocomplete="organization" placeholder="Company name"></label>
+    <button class="btn" type="submit">Request a demo</button>
+    <p class="cmsg" id="dMsg" role="status" aria-live="polite"></p>
+    <p class="fine">We use your details only to reply to this request.</p>
+  </form>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <span>© 2026 Ambit · AI-native accounting for startups &amp; growing businesses.</span>
+  <span class="mono">Figures shown are illustrative sample data.</span>
+</div></footer>
+
+<script>
+(function(){
+  // theme toggle (remembers per-viewer; falls back silently)
+  var KEY='ambit-theme', root=document.documentElement;
+  try{var s=localStorage.getItem(KEY); if(s) root.setAttribute('data-theme',s);}catch(e){}
+  var btn=document.getElementById('themeBtn');
+  btn&&btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var isDark = cur ? cur==='dark' : window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=isDark?'light':'dark'; root.setAttribute('data-theme',next);
+    try{localStorage.setItem(KEY,next);}catch(e){}
+  });
+  // statements tabs
+  document.querySelectorAll('.rtab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.rtab').forEach(function(x){x.setAttribute('aria-selected',String(x===t));});
+      var k=t.dataset.r;
+      document.querySelectorAll('.rpanel').forEach(function(p){p.classList.toggle('on',p.dataset.rp===k);});
+    });
+  });
+  // demo form (preview: validates and confirms, no external submit)
+  var f=document.getElementById('demoForm'), m=document.getElementById('dMsg');
+  f&&f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('dName').value.trim();
+    var email=document.getElementById('dEmail').value.trim();
+    var ok=name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    if(!ok){ m.style.color='var(--accent)'; m.textContent='Please add your name and a valid work email.'; return; }
+    m.style.color='var(--good)';
+    m.textContent='Thanks, '+name.split(' ')[0]+' — connect this form to your mailbox to start receiving requests.';
+    f.reset();
+  });
+})();
+</script>
